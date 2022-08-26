@@ -14,6 +14,8 @@ export default function App() {
   };
 
   const [userProfile, setUserProfile] = useState<Array<UserProfile>>([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onClickFetchUser = () => {
     axios
@@ -26,15 +28,30 @@ export default function App() {
           address: `${user.address.street}${user.address.suite}${user.address.city}`
         }));
         setUserProfile(data);
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   return (
     <div className="App">
       <button onClick={onClickFetchUser}>表示</button>
-      {userProfile.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      <br />
+      {error ? (
+        <p style={{ color: "red" }}>読み込みに失敗しました</p>
+      ) : loading ? (
+        <p>loading...</p>
+      ) : (
+        <>
+          {userProfile.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </>
+      )}
     </div>
   );
 }
