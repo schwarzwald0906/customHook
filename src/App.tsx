@@ -1,8 +1,5 @@
 import { UserCard } from "./components/UserCard";
 import "./styles.css";
-import { User } from "./types/api/user";
-import { UserProfile } from "./types/UserProfile";
-import { useState } from "react";
 import { AllUsers } from "./Hooks/AllUsers";
 
 export default function App() {
